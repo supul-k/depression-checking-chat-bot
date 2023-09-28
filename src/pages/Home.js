@@ -1,12 +1,16 @@
-import React from 'react'
-import Drawer from '../Components/Drawer'
+import MainDrawer from "../Components/MainDrawer";
+import LandingContent from "../Components/LandingContent";
+import { Box } from "@mui/material";
 
 function Home() {
   return (
     <div>
-        <Drawer />
+      <Box sx={{ display: "flex" }}>
+        <MainDrawer />
+        <LandingContent/>
+      </Box>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
