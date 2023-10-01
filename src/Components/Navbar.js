@@ -33,21 +33,21 @@ function Navbar({ open, setOpen }) {
   };
 
   return (
-    <AppBar position="fixed" open={open} sx={{ backgroundColor:"green"}}>
+    <AppBar position="fixed" open={open} sx={{ backgroundColor:"#0077b6"}}>
       <Toolbar>
         <IconButton
-          color="inherit"
+          color="rgba(0, 0, 0, 0.54)"
           aria-label="open drawer"
           onClick={handleDrawerOpen}
           edge="start"
           sx={{
             marginRight: 5,
-            ...(open && { display: "none" }),
+            ...(open && { display: "none" }),          
           }}
         >
-          <MenuIcon />
+          <MenuIcon sx={{color: '#caf0f8'}}/>
         </IconButton>
-        <Typography variant="h6" noWrap component="div">
+        <Typography sx={{fontWeight: 'bold', color: '#caf0f8'}} variant="h6" noWrap component="div">
           MediHelp v3.5
         </Typography>
       </Toolbar>

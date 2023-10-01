@@ -1,7 +1,8 @@
 import React from "react";
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from '@mui/material/Typography'
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -14,9 +15,38 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 function LandingPage() {
   return (
-    <Box component="main" sx={{  p: 3, backgroundColor: "white", borderRadius: "50%" }}>
+    <Box
+      component="main"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100%",
+        width: "100%",
+      }}
+    >
       <DrawerHeader />
-      hello
+      <Typography sx={{color: "white",fontWeight: "bold",fontSize: "4rem",}}>We are here for you!</Typography>
+      <div style={{ display: "flex" }}>
+        <Button
+          sx={{
+            backgroundColor: "#caf0f8",
+            marginBottom: 2,
+            marginRight: 2,
+            color: "black",
+          }}
+          size="large"
+        >
+          Medi Help
+        </Button>
+        <Button
+          sx={{ backgroundColor: "#caf0f8", marginBottom: 2, color: "black" }}
+          size="large"
+        >
+          Activities
+        </Button>
+      </div>
     </Box>
   );
 }
