@@ -33,7 +33,7 @@ function Navbar({ open, setOpen }) {
   };
 
   return (
-    <AppBar position="fixed" open={open}>
+    <AppBar position="fixed" open={open} sx={{ backgroundColor:"green"}}>
       <Toolbar>
         <IconButton
           color="inherit"
