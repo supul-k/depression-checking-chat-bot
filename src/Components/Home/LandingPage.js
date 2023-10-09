@@ -1,8 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from '@mui/material/Typography'
+import Typography from "@mui/material/Typography";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -14,6 +15,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 function LandingPage() {
+  const navigate = useNavigate();
   return (
     <Box
       component="main"
@@ -27,7 +29,9 @@ function LandingPage() {
       }}
     >
       <DrawerHeader />
-      <Typography sx={{color: "white",fontWeight: "bold",fontSize: "4rem",}}>We are here for you!</Typography>
+      <Typography sx={{ color: "white", fontWeight: "bold", fontSize: "4rem" }}>
+        We are here for you!
+      </Typography>
       <div style={{ display: "flex" }}>
         <Button
           sx={{
@@ -35,14 +39,30 @@ function LandingPage() {
             marginBottom: 2,
             marginRight: 2,
             color: "black",
+            "&:hover": {
+              color: "#caf0f8",
+            },
           }}
           size="large"
+          onClick={() => {
+              navigate("/medihelp"); 
+          }}
         >
           Medi Help
         </Button>
         <Button
-          sx={{ backgroundColor: "#caf0f8", marginBottom: 2, color: "black" }}
+          sx={{
+            backgroundColor: "#caf0f8",
+            marginBottom: 2,
+            color: "black",
+            "&:hover": {
+              color: "#caf0f8",
+            },
+          }}
           size="large"
+          onClick={() => {
+            navigate("/"); 
+        }}
         >
           Activities
         </Button>

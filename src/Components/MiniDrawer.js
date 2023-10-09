@@ -101,7 +101,7 @@ export default function MiniDrawer({ open, setOpen }) {
                 }}
                 onClick={() => {
                   if (index === 0) {
-                    navigate("/"); 
+                    navigate("/");
                   } else if (index === 1) {
                     navigate("/medihelp");
                   } else {

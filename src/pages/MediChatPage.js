@@ -24,7 +24,7 @@ function MediChatPage({ open }) {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-        //   background: "linear-gradient(45deg, #03045e 30%, #0077b6 90%)",
+          // background: "linear-gradient(45deg, #03045e 30%, #0077b6 90%)",
           height: "100%",
           width: open
             ? `calc(${viewportWidthInPx}px - 240px)`

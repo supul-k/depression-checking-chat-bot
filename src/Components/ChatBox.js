@@ -1,20 +1,17 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button, Paper } from "@mui/material";
+import { Box, TextField, Button, Paper } from "@mui/material";
 
 const ChatBox = ({ open }) => {
-  const [inputMessage, setInputMessage] = useState(""); // State to store user input
-  const [chatMessages, setChatMessages] = useState([]); // State to store chat messages
+  const [inputMessage, setInputMessage] = useState(""); 
+  const [chatMessages, setChatMessages] = useState([]);
 
   const viewportWidthInPx = window.innerWidth;
 
-  // Function to handle user input submission
   const handleSendMessage = () => {
     if (inputMessage.trim() !== "") {
-      // Add the user message to the chat
       setChatMessages([...chatMessages, { text: inputMessage, user: true }]);
       setInputMessage("");
 
-      // Simulate a chatbot response (replace this with actual chatbot logic)
       setTimeout(() => {
         const chatbotResponse = "This is a chatbot response.";
         setChatMessages([
@@ -24,6 +21,7 @@ const ChatBox = ({ open }) => {
       }, 1000);
     }
   };
+  console.log("1:", chatMessages);
 
   return (
     <div>
@@ -32,26 +30,29 @@ const ChatBox = ({ open }) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          background: "#f4f4f4",
+          justifyContent: 'space-between',
+          background: "linear-gradient(45deg, #03045e 30%, #0077b6 90%)",
           height: "100vh",
           width: open
             ? `calc(${viewportWidthInPx}px - 240px)`
             : `calc(${viewportWidthInPx}px - 65px)`,
         }}
       >
-        {/* Chat messages container */}
         <Paper
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-start",
+            justifyContent: "flex-end",
             maxWidth: "80%",
+            minWidth: "60%",
+            minHeight: "70%",
             padding: "20px",
             borderRadius: "10px",
             marginBottom: "20px",
             overflowY: "auto",
             maxHeight: "calc(100% - 120px)",
+            marginTop: '100px'
           }}
         >
           {chatMessages.map((message, index) => (
@@ -63,41 +64,50 @@ const ChatBox = ({ open }) => {
                 padding: "10px",
                 borderRadius: "8px",
                 background: message.user ? "#5bc0de" : "#e0e0e0",
-                color: message.user ? "white" : "black",
+                color: message.user ? "white" : "black",    
+                alignSelf: message.user ? "flex-end" : "flex-start",            
               }}
             >
               {message.text}
             </div>
           ))}
         </Paper>
-
-        {/* User input field */}
         <Box
           sx={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "80%",
-            marginTop: "20px",
+            alignItems: "baseline",
+            justifyContent: "center",
+            maxWidth: "80%",
+            minWidth: "60%",
           }}
         >
           <TextField
+            sx={{marginBottom: '20px'}}
+            color="primary"
             label="Type a message"
             variant="outlined"
             value={inputMessage}
+            inputProps={{ 
+              style: { 
+                color: 'white',
+                borderColor: 'white',
+              },
+              placeholder: 'Enter your message',  
+          }}
             onChange={(e) => setInputMessage(e.target.value)}
-            style={{ flex: 1 }}
+            style={{ flex: 1,  }}
+            focused
           />
           <Button
             variant="contained"
             onClick={handleSendMessage}
             style={{
               marginLeft: "10px",
-              backgroundColor: "#5bc0de", // Background color similar to GPT-3
-              borderRadius: "20px", // Increased border radius for a rounded appearance
-              color: "white", // Text color
-              fontWeight: "bold", // Bold text
-              boxShadow: "none", // Remove the button shadow
+              backgroundColor: "#5bc0de", 
+              borderRadius: "20px",
+              color: "white",
+              fontWeight: "bold",
+              boxShadow: "none",
             }}
           >
             Send
