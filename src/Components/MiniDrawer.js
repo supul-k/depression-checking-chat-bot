@@ -105,7 +105,7 @@ export default function MiniDrawer({ open, setOpen }) {
                   } else if (index === 1) {
                     navigate("/medihelp");
                   } else {
-                    navigate("/");
+                    navigate("/activity");
                   }
                 }}
               >

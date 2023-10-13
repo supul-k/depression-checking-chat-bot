@@ -2,6 +2,7 @@ import "./App.css";
 import React, {useState} from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import ActivityPage from "./pages/ActivityPage";
 import Footer from "./Components/Footer";
 import MainDrawer from "./Components/MainDrawer";
 import { Box } from "@mui/material";
@@ -18,6 +19,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage open={open}/>} />
               <Route path="/medihelp" element={<MediChatPage open={open}/>} />
+              <Route path="/activity" element={<ActivityPage open={open}/>} />
             </Routes>
           </Box>
           {/* < Footer /> */}
