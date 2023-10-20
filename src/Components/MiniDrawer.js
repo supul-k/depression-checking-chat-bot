@@ -67,7 +67,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer({ open, setOpen }) {
+export default function MiniDrawer({ open, setOpen, setOpenRegisterModal }) {
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -103,6 +103,7 @@ export default function MiniDrawer({ open, setOpen }) {
                   if (index === 0) {
                     navigate("/");
                   } else if (index === 1) {
+                    setOpenRegisterModal(true);
                     navigate("/medihelp");
                   } else {
                     navigate("/activity");

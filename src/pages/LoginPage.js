@@ -11,7 +11,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
 export default function Login({ openLoginModal, setOpenLoginModal }) {
-  const handleOpen = () => setOpenLoginModal(true);
+//   const handleOpen = () => setOpenLoginModal(true);
   const handleClose = () => setOpenLoginModal(false);
 
   const handleSubmit = (event) => {
@@ -32,6 +32,7 @@ export default function Login({ openLoginModal, setOpenLoginModal }) {
             alert("login success");
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("email", response.data.email);
+            setOpenLoginModal(false);
             // window.location.href = `/menu`;
           } else {
             alert("login failed");
@@ -44,12 +45,12 @@ export default function Login({ openLoginModal, setOpenLoginModal }) {
 
   return (
     <div>
-      <Button
+      {/* <Button
         sx={{ marginTop: "300px", marginLeft: "300px" }}
         onClick={handleOpen}
       >
         Open modal
-      </Button>
+      </Button> */}
       <Modal
         sx={{
           maxWidth: "500px",

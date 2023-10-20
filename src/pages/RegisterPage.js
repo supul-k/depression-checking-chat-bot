@@ -10,9 +10,9 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
-export default function RegisterPage({ openLoginModal, setOpenLoginModal }) {
-  const handleOpen = () => setOpenLoginModal(true);
-  const handleClose = () => setOpenLoginModal(false);
+export default function RegisterPage({ openRegisterModal, setOpenLoginModal, setOpenRegisterModal }) {
+//   const handleOpen = () => setOpenRegisterModal(true);
+  const handleClose = () => setOpenRegisterModal(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -31,9 +31,8 @@ export default function RegisterPage({ openLoginModal, setOpenLoginModal }) {
       .then((response) => {
         console.log("response", response);
         if (response.data.status === true) {
-          alert("login success");
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("email", response.data.email);
+          alert("registration success");
+          setOpenRegisterModal(false);
           setOpenLoginModal(true);
         } else {
           alert("Registration failed!");
@@ -46,12 +45,12 @@ export default function RegisterPage({ openLoginModal, setOpenLoginModal }) {
 
   return (
     <div>
-      <Button
+      {/* <Button
         sx={{ marginTop: "300px", marginLeft: "300px" }}
         onClick={handleOpen}
       >
         Open modal
-      </Button>
+      </Button> */}
       <Modal
         sx={{
           maxWidth: "500px",
@@ -61,7 +60,7 @@ export default function RegisterPage({ openLoginModal, setOpenLoginModal }) {
           alignItems: "center",
         }}
         keepMounted
-        open={openLoginModal}
+        open={openRegisterModal}
         onClose={handleClose}
         aria-labelledby="server-modal-title"
         aria-describedby="server-modal-description"
@@ -78,7 +77,7 @@ export default function RegisterPage({ openLoginModal, setOpenLoginModal }) {
           }}
         >
           <Typography component="h1" variant="h5" sx={{ marginTop: "50px" }}>
-            Sign in
+            Sign Up
           </Typography>
           <Box
             component="form"
@@ -94,6 +93,16 @@ export default function RegisterPage({ openLoginModal, setOpenLoginModal }) {
               label="Email Address"
               name="email"
               autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="User Name"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField
@@ -116,7 +125,7 @@ export default function RegisterPage({ openLoginModal, setOpenLoginModal }) {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Sign Up
             </Button>
             <Grid container>
               <Grid item xs>
