@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import ActivityComponent from "../Components/ActivityComponent";
 import { Box } from "@mui/material";
 
-function ActivityPage({ open }) {
+function ActivityPage({ open, setOpenLoginModal }) {
   const [viewportWidthInPx, setViewportWidthInPx] = useState(window.innerWidth);
   
   useEffect(() => {
@@ -27,7 +27,7 @@ function ActivityPage({ open }) {
             : `calc(${viewportWidthInPx}px - 65px)`,
         }}
       >
-        <ActivityComponent open={open}/>
+        <ActivityComponent open={open} />
       </Box>
     </div>
   );

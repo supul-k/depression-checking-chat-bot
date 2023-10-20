@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import ChatBox from "../Components/ChatBox";
 
-function MediChatPage({ open }) {
+function MediChatPage({ open, setOpenLoginModal }) {
   const [viewportWidthInPx, setViewportWidthInPx] = useState(window.innerWidth);
 
   useEffect(() => {
