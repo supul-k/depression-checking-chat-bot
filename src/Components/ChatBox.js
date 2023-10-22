@@ -1,27 +1,49 @@
 import React, { useState } from "react";
+import { ChatResponseApi } from "../api/Axios";
 import { Box, TextField, Button, Paper } from "@mui/material";
 
 const ChatBox = ({ open }) => {
-  const [inputMessage, setInputMessage] = useState(""); 
+  const [inputMessage, setInputMessage] = useState("");
+  const [botResponseMessage, setBotResponseMessage] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
 
   const viewportWidthInPx = window.innerWidth;
 
   const handleSendMessage = () => {
     if (inputMessage.trim() !== "") {
-      setChatMessages([...chatMessages, { text: inputMessage, user: true }]);
-      setInputMessage("");
+      const sentMessage = { text: inputMessage, user: true };
+      setChatMessages((prevMessages) => [...prevMessages, sentMessage]);
 
-      setTimeout(() => {
-        const chatbotResponse = "This is a chatbot response.";
-        setChatMessages([
-          ...chatMessages,
-          { text: chatbotResponse, user: false },
-        ]);
-      }, 1000);
+      const user_id = localStorage.getItem("user_id");
+      const sentData = {
+        user_id: user_id,
+        message: inputMessage,
+      };
+
+      ChatResponseApi(sentData)
+      .then((response) => {
+        console.log("response", response);
+        if (response.data.status === true) {
+          setBotResponseMessage(response.data.message);
+          chatBotMessage();
+        } else {
+          setBotResponseMessage("Response failed");
+          chatBotMessage();
+        }
+      })
+      .catch((error) => {
+        console.log("error", error.response.data.message);
+      });
     }
   };
-  console.log("1:", chatMessages);
+
+  const chatBotMessage = () => {
+    setTimeout(() => {
+      const chatbotResponse = botResponseMessage;
+      const responseMessage = { text: chatbotResponse, user: false };
+      setChatMessages((prevMessages) => [...prevMessages, responseMessage]);
+    }, 1000);
+  };
 
   return (
     <div>
@@ -30,7 +52,7 @@ const ChatBox = ({ open }) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: 'space-between',
+          justifyContent: "space-between",
           background: "linear-gradient(45deg, #03045e 30%, #0077b6 90%)",
           height: "100vh",
           width: open
@@ -52,7 +74,7 @@ const ChatBox = ({ open }) => {
             marginBottom: "20px",
             overflowY: "auto",
             maxHeight: "calc(100% - 120px)",
-            marginTop: '100px'
+            marginTop: "100px",
           }}
         >
           {chatMessages.map((message, index) => (
@@ -64,8 +86,8 @@ const ChatBox = ({ open }) => {
                 padding: "10px",
                 borderRadius: "8px",
                 background: message.user ? "#5bc0de" : "#e0e0e0",
-                color: message.user ? "white" : "black",    
-                alignSelf: message.user ? "flex-end" : "flex-start",            
+                color: message.user ? "white" : "black",
+                alignSelf: message.user ? "flex-end" : "flex-start",
               }}
             >
               {message.text}
@@ -82,20 +104,20 @@ const ChatBox = ({ open }) => {
           }}
         >
           <TextField
-            sx={{marginBottom: '20px'}}
+            sx={{ marginBottom: "20px" }}
             color="primary"
             label="Type a message"
             variant="outlined"
             value={inputMessage}
-            inputProps={{ 
-              style: { 
-                color: 'white',
-                borderColor: 'white',
+            inputProps={{
+              style: {
+                color: "white",
+                borderColor: "white",
               },
-              placeholder: 'Enter your message',  
-          }}
+              placeholder: "Enter your message",
+            }}
             onChange={(e) => setInputMessage(e.target.value)}
-            style={{ flex: 1,  }}
+            style={{ flex: 1 }}
             focused
           />
           <Button
@@ -103,7 +125,7 @@ const ChatBox = ({ open }) => {
             onClick={handleSendMessage}
             style={{
               marginLeft: "10px",
-              backgroundColor: "#5bc0de", 
+              backgroundColor: "#5bc0de",
               borderRadius: "20px",
               color: "white",
               fontWeight: "bold",

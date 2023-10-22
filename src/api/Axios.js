@@ -28,3 +28,8 @@ export const RegisterUserUserApi = async (RegisterData) => {
   const res = await registerAPI.post(`/user/register_user`, RegisterData);
   return res;
 };
+
+export const ChatResponseApi = async (sentData) => {
+  const res = await api.post(`/chat/receive_message`, sentData);
+  return res;
+};
