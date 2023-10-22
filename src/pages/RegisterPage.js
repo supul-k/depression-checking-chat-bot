@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { RegisterUserUserApi } from "../api/Axios";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
@@ -6,13 +7,15 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
-export default function RegisterPage({ openRegisterModal, setOpenLoginModal, setOpenRegisterModal }) {
-//   const handleOpen = () => setOpenRegisterModal(true);
-  const handleClose = () => setOpenRegisterModal(false);
+export default function RegisterPage({
+  openRegisterModal,
+  setOpenLoginModal,
+  setOpenRegisterModal,
+}) {
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -43,14 +46,13 @@ export default function RegisterPage({ openRegisterModal, setOpenLoginModal, set
       });
   };
 
+  const handleGoToHomePage = () => {
+    navigate("/");
+    window.location.reload();
+  };
+
   return (
     <div>
-      {/* <Button
-        sx={{ marginTop: "300px", marginLeft: "300px" }}
-        onClick={handleOpen}
-      >
-        Open modal
-      </Button> */}
       <Modal
         sx={{
           maxWidth: "500px",
@@ -61,7 +63,7 @@ export default function RegisterPage({ openRegisterModal, setOpenLoginModal, set
         }}
         keepMounted
         open={openRegisterModal}
-        onClose={handleClose}
+        // onClose={handleClose}
         aria-labelledby="server-modal-title"
         aria-describedby="server-modal-description"
       >
@@ -129,14 +131,17 @@ export default function RegisterPage({ openRegisterModal, setOpenLoginModal, set
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
+                <Button onClick={handleGoToHomePage}>Close</Button>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+                <Button
+                  onClick={() => {
+                    setOpenRegisterModal(false);
+                    setOpenLoginModal(true);
+                  }}
+                >
+                  Already have an account? Sign In
+                </Button>
               </Grid>
             </Grid>
           </Box>

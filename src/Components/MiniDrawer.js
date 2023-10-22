@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
@@ -46,7 +46,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -70,6 +69,17 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer({ open, setOpen, setOpenRegisterModal }) {
   const theme = useTheme();
   const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      setLoggedIn(true);
+    } else {
+      console.log("User is not logged in.");
+    }
+  }, []);
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -103,10 +113,17 @@ export default function MiniDrawer({ open, setOpen, setOpenRegisterModal }) {
                   if (index === 0) {
                     navigate("/");
                   } else if (index === 1) {
-                    setOpenRegisterModal(true);
-                    navigate("/medihelp");
+                    if (loggedIn) {
+                      navigate("/medihelp");
+                    } else {
+                      setOpenRegisterModal(true);
+                    }
                   } else {
-                    navigate("/activity");
+                    if (loggedIn) {
+                      navigate("/activity");
+                    } else {
+                      setOpenRegisterModal(true);
+                    }
                   }
                 }}
               >

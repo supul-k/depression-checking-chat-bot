@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import jwt from "jsonwebtoken";
 import Box from "@mui/material/Box";
 import ChatBox from "../Components/ChatBox";
 
@@ -13,19 +12,6 @@ function MediChatPage({ open, setOpenLoginModal }) {
     ) {
       localStorage.clear();
       setOpenLoginModal(true);
-    } else {
-      const token = localStorage.getItem("token");
-
-      // try {
-      //   const decodedToken = jwt.decode(token);
-
-      //   if (decodedToken) {
-      //     const user_id = decodedToken.user_id;
-      //     console.log("User ID:", user_id);
-      //   }
-      // } catch (error) {
-      //   console.error("Token decoding error:", error);
-      // }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

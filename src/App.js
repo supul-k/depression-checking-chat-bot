@@ -1,5 +1,5 @@
 import "./App.css";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ActivityPage from "./pages/ActivityPage";
@@ -16,33 +16,54 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <div >
-          <Box sx={{ display: "flex", width: '100vw', height:'100vh'}}>
-            <MainDrawer open={open} setOpen={setOpen} setOpenRegisterModal={setOpenRegisterModal}/>
+        <div>
+          <Box sx={{ display: "flex", width: "100vw", height: "100vh" }}>
+            <MainDrawer
+              open={open}
+              setOpen={setOpen}
+              setOpenRegisterModal={setOpenRegisterModal}
+              setOpenLoginModal={setOpenLoginModal}
+            />
             <Routes>
-              <Route path="/" element={<HomePage open={open}/>} />
-              <Route path="/medihelp" element={<MediChatPage open={open} setOpenLoginModal={setOpenLoginModal}/>} />
-              <Route path="/activity" element={<ActivityPage open={open} setOpenLoginModal={setOpenLoginModal}/>} />
+              <Route path="/" element={<HomePage open={open} />} />
+              <Route
+                path="/medihelp"
+                element={
+                  <MediChatPage
+                    open={open}
+                    setOpenLoginModal={setOpenLoginModal}
+                  />
+                }
+              />
+              <Route
+                path="/activity"
+                element={
+                  <ActivityPage
+                    open={open}
+                    setOpenLoginModal={setOpenLoginModal}
+                  />
+                }
+              />
             </Routes>
           </Box>
           {/* < Footer /> */}
         </div>
+        {openLoginModal && (
+          <LoginPage
+            openLoginModal={openLoginModal}
+            setOpenLoginModal={setOpenLoginModal}
+            setOpenRegisterModal={setOpenRegisterModal}
+          />
+        )}
+
+        {openRegisterModal && (
+          <RegisterPage
+            openRegisterModal={openRegisterModal}
+            setOpenRegisterModal={setOpenRegisterModal}
+            setOpenLoginModal={setOpenLoginModal}
+          />
+        )}
       </Router>
-
-      {openLoginModal && (
-        <LoginPage
-          openLoginModal={openLoginModal}
-          setOpenLoginModal={setOpenLoginModal}
-        />
-      )}
-
-      {openRegisterModal && (
-        <RegisterPage
-          openRegisterModal={openRegisterModal}
-          setOpenRegisterModal={setOpenRegisterModal}
-          setOpenLoginModal={setOpenLoginModal}
-        />
-      )}
     </div>
   );
 }
