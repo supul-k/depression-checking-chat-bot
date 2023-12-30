@@ -6,6 +6,7 @@ const ChatBox = ({ open }) => {
   const [inputMessage, setInputMessage] = useState("");
   const [botResponseMessage, setBotResponseMessage] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
+  const [isChatbotResponding, setIsChatbotResponding] = useState(false);
 
   const viewportWidthInPx = window.innerWidth;
 
@@ -17,18 +18,20 @@ const ChatBox = ({ open }) => {
       const user_id = localStorage.getItem("user_id");
       const sentData = {
         user_id: user_id,
-        message: inputMessage,
+        message_text: inputMessage,
       };
-
+      setIsChatbotResponding(true);
       ChatResponseApi(sentData)
       .then((response) => {
         console.log("response", response);
         if (response.data.status === true) {
           setBotResponseMessage(response.data.message);
           chatBotMessage();
+          setIsChatbotResponding(false);
         } else {
           setBotResponseMessage("Response failed");
           chatBotMessage();
+          setIsChatbotResponding(false);
         }
       })
       .catch((error) => {
@@ -41,7 +44,7 @@ const ChatBox = ({ open }) => {
     setTimeout(() => {
       const chatbotResponse = botResponseMessage;
       const responseMessage = { text: chatbotResponse, user: false };
-      setChatMessages((prevMessages) => [...prevMessages, responseMessage]);
+      setChatMessages((prevMessages) => [...prevMessages, responseMessage]);      
     }, 1000);
   };
 
@@ -82,12 +85,13 @@ const ChatBox = ({ open }) => {
               key={index}
               style={{
                 textAlign: message.user ? "right" : "left",
-                margin: "8px",
+                margin: message.user ? "8px 8px 8px 200px" : "8px 200px 8px 8px",
                 padding: "10px",
+                maxWidth: "80%",
                 borderRadius: "8px",
                 background: message.user ? "#5bc0de" : "#e0e0e0",
                 color: message.user ? "white" : "black",
-                alignSelf: message.user ? "flex-end" : "flex-start",
+                alignSelf: message.user ? "flex-end" : "flex-start",              
               }}
             >
               {message.text}
@@ -125,12 +129,13 @@ const ChatBox = ({ open }) => {
             onClick={handleSendMessage}
             style={{
               marginLeft: "10px",
-              backgroundColor: "#5bc0de",
+              backgroundColor: isChatbotResponding ? "#5bc0de" : "#0088cc",
               borderRadius: "20px",
               color: "white",
               fontWeight: "bold",
               boxShadow: "none",
             }}
+            disabled={isChatbotResponding}
           >
             Send
           </Button>
