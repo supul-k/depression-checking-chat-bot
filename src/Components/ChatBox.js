@@ -1,12 +1,25 @@
-import React, { useState } from "react";
-import { ChatResponseApi } from "../api/Axios";
-import { Box, TextField, Button, Paper } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { ChatResponseApi, ChatEvaluateApi } from "../api/Axios";
+import {
+  Box,
+  TextField,
+  Button,
+  Paper,
+  Modal,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 
 const ChatBox = ({ open }) => {
   const [inputMessage, setInputMessage] = useState("");
   const [botResponseMessage, setBotResponseMessage] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
   const [isChatbotResponding, setIsChatbotResponding] = useState(false);
+  const [evaluateResponseMessage, setEvaluateResponseMessage] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpen = () => setOpenModal(true);
+  const handleClose = () => setOpenModal(false);
 
   const viewportWidthInPx = window.innerWidth;
 
@@ -22,31 +35,83 @@ const ChatBox = ({ open }) => {
       };
       setIsChatbotResponding(true);
       ChatResponseApi(sentData)
-      .then((response) => {
-        console.log("response", response);
-        if (response.data.status === true) {
-          setBotResponseMessage(response.data.message);
-          chatBotMessage();
+        .then((response) => {
+          setInputMessage("");
+          console.log("response", response.data.message);
+          console.log("status", response.data.status);
+          if (response.data.status === true) {
+            if (response.data.message === "") {
+              setBotResponseMessage("I couldn't understand that");
+            } else {
+              setBotResponseMessage(response.data.message);
+            }
+            // chatBotMessage();
+            setIsChatbotResponding(false);
+          } else {
+            setBotResponseMessage("Response failed");
+            setIsChatbotResponding(false);
+            // chatBotMessage();
+          }
+        })
+        .catch((error) => {
+          console.log("error", error.response.data.message);
+          setBotResponseMessage(
+            "An error occurred while processing the request."
+          );
+          // chatBotMessage();
+        })
+        .finally(() => {
           setIsChatbotResponding(false);
-        } else {
-          setBotResponseMessage("Response failed");
-          chatBotMessage();
-          setIsChatbotResponding(false);
-        }
-      })
-      .catch((error) => {
-        console.log("error", error.response.data.message);
-      });
+        });
+    }
+  };
+
+  const userMessages = chatMessages
+    .filter((message) => message.user === true)
+    .map((message) => message.text);
+
+  const handleEvaluate = () => {
+    if (userMessages.length !== 0) {
+      setEvaluateResponseMessage("");
+      const evaluateData = userMessages;
+      ChatEvaluateApi(evaluateData)
+        .then((response) => {
+          console.log("response", response.data.message);
+          console.log("status", response.data.status);
+          if (response.data.status === true) {
+            if (response.data.message === "") {
+              setEvaluateResponseMessage("Evaluation failed");
+            } else {
+              setEvaluateResponseMessage(response.data.message);
+              handleOpen();
+            }
+          } else {
+            setEvaluateResponseMessage("Response failed");
+          }
+        })
+        .catch((error) => {
+          console.log("error", error.response.data.message);
+          setEvaluateResponseMessage(
+            "An error occurred while processing the request."
+          );
+        });
     }
   };
 
   const chatBotMessage = () => {
     setTimeout(() => {
-      const chatbotResponse = botResponseMessage;
-      const responseMessage = { text: chatbotResponse, user: false };
-      setChatMessages((prevMessages) => [...prevMessages, responseMessage]);      
+      // const chatbotResponse = botResponseMessage;
+      const responseMessage = { text: botResponseMessage, user: false };
+      setChatMessages((prevMessages) => [...prevMessages, responseMessage]);
+      console.log(chatMessages.filter((message) => message.user === true));
     }, 1000);
   };
+
+  useEffect(() => {
+    if (botResponseMessage !== "") {
+      chatBotMessage();
+    }
+  }, [botResponseMessage]);
 
   return (
     <div>
@@ -76,7 +141,7 @@ const ChatBox = ({ open }) => {
             borderRadius: "10px",
             marginBottom: "20px",
             overflowY: "auto",
-            maxHeight: "calc(100% - 120px)",
+            maxHeight: "calc(100vh - 120px)",
             marginTop: "100px",
           }}
         >
@@ -85,13 +150,15 @@ const ChatBox = ({ open }) => {
               key={index}
               style={{
                 textAlign: message.user ? "right" : "left",
-                margin: message.user ? "8px 8px 8px 200px" : "8px 200px 8px 8px",
+                margin: message.user
+                  ? "8px 8px 8px 200px"
+                  : "8px 200px 8px 8px",
                 padding: "10px",
                 maxWidth: "80%",
                 borderRadius: "8px",
                 background: message.user ? "#5bc0de" : "#e0e0e0",
                 color: message.user ? "white" : "black",
-                alignSelf: message.user ? "flex-end" : "flex-start",              
+                alignSelf: message.user ? "flex-end" : "flex-start",
               }}
             >
               {message.text}
@@ -139,8 +206,56 @@ const ChatBox = ({ open }) => {
           >
             Send
           </Button>
+          <Button
+            variant="contained"
+            onClick={handleEvaluate}
+            style={{
+              backgroundColor:
+                userMessages.length === 0 ? "#5bc0de" : "#0088cc",
+              borderRadius: "20px",
+              color: "white",
+              fontWeight: "bold",
+              boxShadow: "none",
+              marginLeft: "100px",
+            }}
+            disabled={userMessages.length === 0}
+          >
+            Evaluate
+          </Button>
         </Box>
       </Box>
+      <Modal
+        open={openModal}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Box
+          sx={{
+            bgcolor: "#5bc0de", // Set your background color here
+            borderRadius: "10px", // Set your border radius here
+            padding: "20px", // Set your padding here
+          }}
+        >
+          {evaluateResponseMessage !== "" ? (
+            <>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Calculated Depression Level
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                {evaluateResponseMessage}
+              </Typography>
+            </>
+          ) : (
+            <CircularProgress />
+          )}
+        </Box>
+      </Modal>
     </div>
   );
 };

@@ -33,3 +33,8 @@ export const ChatResponseApi = async (sentData) => {
   const res = await api.post(`/chat/receive_message`, sentData);
   return res;
 };
+
+export const ChatEvaluateApi = async (evaluateData) => {
+  const res = await api.post(`/chat/evaluate`, evaluateData);
+  return res;
+};
