@@ -45,6 +45,7 @@ function Navbar({ open, setOpen, setOpenLoginModal }) {
       setUserEmail(email);
       setLoggedIn(true);
     } else {
+      setLoggedIn(false);
       console.log("User is not logged in.");
     }
   }, []);
