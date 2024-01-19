@@ -43,10 +43,7 @@ const ChatBox = ({ open }) => {
             if (response.data.message === "") {
               setBotResponseMessage("I couldn't understand that");
             } else {
-              const originalNumber = response.data.message;
-              const formattedNumber = parseFloat(originalNumber).toFixed(2);
-              const messageWithPercentage = `${formattedNumber}%`;
-              setBotResponseMessage(messageWithPercentage);
+              setBotResponseMessage(response.data.message);
             }
             // chatBotMessage();
             setIsChatbotResponding(false);
@@ -77,6 +74,7 @@ const ChatBox = ({ open }) => {
     if (userMessages.length !== 0) {
       setEvaluateResponseMessage("");
       const evaluateData = userMessages;
+      setIsChatbotResponding(true);
       ChatEvaluateApi(evaluateData)
         .then((response) => {
           console.log("response", response.data.message);
@@ -91,8 +89,10 @@ const ChatBox = ({ open }) => {
               setEvaluateResponseMessage(messageWithPercentage);
               handleOpen();
             }
+            setIsChatbotResponding(false);
           } else {
             setEvaluateResponseMessage("Response failed");
+            setIsChatbotResponding(false);
           }
         })
         .catch((error) => {
@@ -217,14 +217,14 @@ const ChatBox = ({ open }) => {
             onClick={handleEvaluate}
             style={{
               backgroundColor:
-                userMessages.length === 0 ? "#5bc0de" : "#0088cc",
+                userMessages.length === 0 || isChatbotResponding ? "#5bc0de" : "#0088cc",
               borderRadius: "20px",
               color: "white",
               fontWeight: "bold",
               boxShadow: "none",
               marginLeft: "100px",
             }}
-            disabled={userMessages.length === 0}
+            disabled={userMessages.length === 0 || isChatbotResponding}
           >
             Evaluate
           </Button>
