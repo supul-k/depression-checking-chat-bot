@@ -82,7 +82,10 @@ const ChatBox = ({ open }) => {
             if (response.data.message === "") {
               setEvaluateResponseMessage("Evaluation failed");
             } else {
-              setEvaluateResponseMessage(response.data.message);
+              const originalNumber = response.data.message;
+              const formattedNumber = parseFloat(originalNumber).toFixed(2);
+              const messageWithPercentage = `${formattedNumber}%`;
+              setEvaluateResponseMessage(messageWithPercentage);
               handleOpen();
             }
           } else {
