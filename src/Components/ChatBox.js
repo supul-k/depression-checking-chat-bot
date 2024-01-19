@@ -43,7 +43,10 @@ const ChatBox = ({ open }) => {
             if (response.data.message === "") {
               setBotResponseMessage("I couldn't understand that");
             } else {
-              setBotResponseMessage(response.data.message);
+              const originalNumber = response.data.message;
+              const formattedNumber = parseFloat(originalNumber).toFixed(2);
+              const messageWithPercentage = `${formattedNumber}%`;
+              setBotResponseMessage(messageWithPercentage);
             }
             // chatBotMessage();
             setIsChatbotResponding(false);
