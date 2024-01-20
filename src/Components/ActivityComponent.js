@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -6,49 +6,72 @@ import {
   Button,
   CardContent,
   Typography,
+  CardMedia,
 } from "@mui/material";
+import { ChatActivityApi } from "../api/Axios";
+import { useNavigate } from "react-router-dom";
+import physical from "../Assets/Images/physical.webp";
+import relax from "../Assets/Images/relax.webp";
+import routines from "../Assets/Images/routines.webp";
+import yoga from "../Assets/Images/yoga.webp";
 
 const viewportWidthInPx = window.innerWidth;
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
-
 const cardData = [
   {
-    title: "Relaxation Meditation",
+    index: 1,
+    title: "Yoga Practice",
     description: "Unwind and reduce stress with guided meditation sessions.",
+    image: yoga,
   },
   {
-    title: "Nature Sounds Therapy",
+    index: 2,
+    title: "Physical activities",
     description: "Escape to the calming sounds of nature and find peace.",
+    image: physical,
   },
   {
-    title: "Mindfulness for Stress",
+    index: 3,
+    title: "Maintain a routine",
     description:
       "Learn mindfulness techniques to alleviate stress and anxiety.",
+    image: routines,
   },
   {
-    title: "Positive Affirmations",
+    index: 4,
+    title: "Relaxation techniques",
     description: "Boost your mood and self-esteem with daily affirmations.",
-  },
-  {
-    title: "Yoga for Well-being",
-    description: "Improve your mental and physical health with yoga practice.",
-  },
-  {
-    title: "Calm and Serene Mind",
-    description:
-      "Achieve a calm and serene state of mind through guided exercises.",
+    image: relax,
   },
 ];
 
 const ActivityComponent = ({ open }) => {
+  const navigate = useNavigate();
+  
+  const [isbotResponding, setIsbotResponding] = useState(true);
+
+  const handleActivityChat = (title) => {
+    setIsbotResponding(false);
+    const topic = {
+      title: title,
+    };
+    console.log("title", topic);
+    ChatActivityApi(topic)
+      .then((response) => {
+        console.log("response", response.data.message);
+        console.log("status", response.data.status);
+        if (response.data.status === true) {
+          setIsbotResponding(true);
+          navigate("/activitychat");
+        } else {
+          setIsbotResponding(true);
+          console.log("Response failed");
+        }
+      })
+      .catch((error) => {
+        console.log("error", error.response.data.message);
+      });
+  };
 
   return (
     <div>
@@ -70,26 +93,36 @@ const ActivityComponent = ({ open }) => {
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: "space-around",            
+            justifyContent: "space-around",
           }}
         >
           {cardData.map((data, index) => (
             <Card
               key={index}
-              variant="outlined"
-              style={{ width: "25%", marginBottom: "16px", margin: "20px", }}
+              sx={{ flex: "0 0 50%", maxWidth: "345px", margin: "20px" }}
             >
+              <CardMedia
+                component="img"
+                alt="green iguana"
+                height="80"
+                image={data.image}
+              />
               <CardContent>
-                <Typography variant="h5" component="div">
+                <Typography gutterBottom variant="h5" component="div">
                   {data.title}
                 </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  {bull}
+                <Typography variant="body2" color="text.secondary">
+                  {data.description}
                 </Typography>
-                <Typography variant="body2">{data.description}</Typography>
               </CardContent>
               <CardActions>
-                <Button size="small">Learn More</Button>
+                <Button
+                  onClick={() => handleActivityChat(data.title)}
+                  size="small"
+                  disabled={!isbotResponding}
+                >
+                  Start guide
+                </Button>
               </CardActions>
             </Card>
           ))}

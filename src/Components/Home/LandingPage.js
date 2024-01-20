@@ -61,7 +61,7 @@ function LandingPage() {
           }}
           size="large"
           onClick={() => {
-            navigate("/"); 
+            navigate("/activity"); 
         }}
         >
           Activities

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ActivityPage from "./pages/ActivityPage";
+import ActivityChatPage from "./Components/ActivityChat";
 import MainDrawer from "./Components/MainDrawer";
 import MediChatPage from "./pages/MediChatPage";
 import LoginPage from "./pages/LoginPage";
@@ -44,6 +45,7 @@ function App() {
                   />
                 }
               />
+              <Route path="/activitychat" element={<ActivityChatPage />} />
             </Routes>
           </Box>
           {/* < Footer /> */}

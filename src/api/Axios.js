@@ -38,3 +38,13 @@ export const ChatEvaluateApi = async (evaluateData) => {
   const res = await api.post(`/chat/evaluate`, evaluateData);
   return res;
 };
+
+export const ChatActivityApi = async (topic) => {
+  const res = await api.post(`/activity/chat_activity`, topic);
+  return res;
+};
+
+export const ChatActivityMessageApi = async (sentData) => {
+  const res = await api.post(`/activity/chat_activity_message`, sentData);
+  return res;
+};
