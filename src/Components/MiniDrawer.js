@@ -14,6 +14,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
+// import useMediaQuery from '@mui/material/useMediaQuery';
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 
@@ -70,6 +71,7 @@ export default function MiniDrawer({ open, setOpen, setOpenRegisterModal }) {
   const theme = useTheme();
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
+  // const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -80,6 +82,10 @@ export default function MiniDrawer({ open, setOpen, setOpenRegisterModal }) {
       console.log("User is not logged in.");
     }
   }, []);
+
+  // React.useEffect(() => {
+  //   setOpen(!isMobile);
+  // }, [isMobile]);
 
   const handleDrawerClose = () => {
     setOpen(false);

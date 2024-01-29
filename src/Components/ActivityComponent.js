@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Card,
@@ -8,7 +8,7 @@ import {
   Typography,
   CardMedia,
 } from "@mui/material";
-import { ChatActivityApi } from "../api/Axios";
+// import { ChatActivityApi } from "../api/Axios";
 import { useNavigate } from "react-router-dom";
 import physical from "../Assets/Images/physical.webp";
 import relax from "../Assets/Images/relax.webp";
@@ -48,29 +48,30 @@ const cardData = [
 const ActivityComponent = ({ open }) => {
   const navigate = useNavigate();
   
-  const [isbotResponding, setIsbotResponding] = useState(true);
+  // const [isbotResponding, setIsbotResponding] = useState(true);
 
   const handleActivityChat = (title) => {
-    setIsbotResponding(false);
-    const topic = {
-      title: title,
-    };
-    console.log("title", topic);
-    ChatActivityApi(topic)
-      .then((response) => {
-        console.log("response", response.data.message);
-        console.log("status", response.data.status);
-        if (response.data.status === true) {
-          setIsbotResponding(true);
-          navigate("/activitychat");
-        } else {
-          setIsbotResponding(true);
-          console.log("Response failed");
-        }
-      })
-      .catch((error) => {
-        console.log("error", error.response.data.message);
-      });
+    navigate("/activitychat");
+    // setIsbotResponding(false);
+    // const topic = {
+    //   title: title,
+    // };
+    // console.log("title", topic);
+    // ChatActivityApi(topic)
+    //   .then((response) => {
+    //     console.log("response", response.data.message);
+    //     console.log("status", response.data.status);
+    //     if (response.data.status === true) {
+    //       setIsbotResponding(true);
+    //       navigate("/activitychat");
+    //     } else {
+    //       setIsbotResponding(true);
+    //       console.log("Response failed");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log("error", error.response.data.message);
+    //   });
   };
 
   return (
@@ -119,7 +120,7 @@ const ActivityComponent = ({ open }) => {
                 <Button
                   onClick={() => handleActivityChat(data.title)}
                   size="small"
-                  disabled={!isbotResponding}
+                  // disabled={!isbotResponding}
                 >
                   Start guide
                 </Button>

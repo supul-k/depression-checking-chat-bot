@@ -32,9 +32,10 @@ export default function Login({ openLoginModal, setOpenLoginModal, setOpenRegist
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("email", response.data.email);
           localStorage.setItem("user_id", response.data.user_id);
-          setOpenLoginModal(false);
-          navigate("/");
           window.location.reload();
+          navigate("/");
+          setOpenLoginModal(false);       
+         
         } else {
           alert("login failed");
         }
