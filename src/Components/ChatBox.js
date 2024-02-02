@@ -21,8 +21,6 @@ const ChatBox = ({ open }) => {
   const handleOpen = () => setOpenModal(true);
   const handleClose = () => setOpenModal(false);
 
-  const viewportWidthInPx = window.innerWidth;
-
   const handleSendMessage = () => {
     if (inputMessage.trim() !== "") {
       const sentMessage = { text: inputMessage, user: true };
@@ -121,7 +119,7 @@ const ChatBox = ({ open }) => {
 
   return (
     <div>
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -129,25 +127,24 @@ const ChatBox = ({ open }) => {
           justifyContent: "space-between",
           background: "linear-gradient(45deg, #03045e 30%, #0077b6 90%)",
           height: "100vh",
-          width: open
-            ? `calc(${viewportWidthInPx}px - 240px)`
-            : `calc(${viewportWidthInPx}px - 65px)`,
+          // width: open
+          //   ? `calc(${viewportWidthInPx}px - 240px)`
+          //   : `calc(${viewportWidthInPx}px - 65px)`,
         }}
-      >
+      > */}
         <Paper
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-start",
             justifyContent: "flex-end",
-            maxWidth: "80%",
-            minWidth: "60%",
+            maxWidth: "100%",
+            minWidth: "100%",
             minHeight: "70%",
             padding: "20px",
             borderRadius: "10px",
             marginBottom: "20px",
             overflowY: "auto",
-            maxHeight: "calc(100vh - 120px)",
             marginTop: "100px",
           }}
         >
@@ -229,7 +226,7 @@ const ChatBox = ({ open }) => {
             Evaluate
           </Button>
         </Box>
-      </Box>
+      {/* </Box> */}
       <Modal
         open={openModal}
         onClose={handleClose}

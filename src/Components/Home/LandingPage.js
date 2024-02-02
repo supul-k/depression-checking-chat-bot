@@ -18,7 +18,7 @@ function LandingPage() {
   const navigate = useNavigate();
   return (
     <Box
-      component="main"
+      // component="main"
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -26,43 +26,58 @@ function LandingPage() {
         justifyContent: "center",
         height: "100%",
         width: "100%",
+        marginLeft: "240px",
       }}
     >
-      <DrawerHeader />
-      <Typography sx={{ color: "white", fontWeight: "bold", fontSize: "4rem" }}>
+      <Typography
+        sx={{
+          color: "white",
+          fontWeight: "bold",
+          fontSize: "4rem",
+          textAlign: "center",
+          marginTop: 2,
+          width: "auto"
+        }}
+      >
         We are here for you!
       </Typography>
-      <div style={{ display: "flex" }}>
+      <div
+        style={{
+          display: "flex",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
         <Button
           sx={{
-            backgroundColor: "#caf0f8",
+            backgroundColor: "#0C0404",
             marginBottom: 2,
             marginRight: 2,
-            color: "black",
+            color: "white",
             "&:hover": {
-              color: "#caf0f8",
+              color: "#0C0404",
             },
           }}
           size="large"
           onClick={() => {
-              navigate("/medihelp"); 
+            navigate("/medihelp");
           }}
         >
           Medi Help
         </Button>
         <Button
           sx={{
-            backgroundColor: "#caf0f8",
+            backgroundColor: "#0C0404",
             marginBottom: 2,
-            color: "black",
+            color: "white",
             "&:hover": {
-              color: "#caf0f8",
+              color: "#0C0404",
             },
           }}
           size="large"
           onClick={() => {
-            navigate("/activity"); 
-        }}
+            navigate("/activity");
+          }}
         >
           Activities
         </Button>

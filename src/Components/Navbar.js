@@ -70,73 +70,75 @@ function Navbar({ open, setOpen, setOpenLoginModal }) {
   };
 
   return (
-    <AppBar position="fixed" open={open} sx={{ backgroundColor: "#0077b6" }}>
-      <Toolbar
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <div style={{ display: "flex" }}>
-          <IconButton
-            color="rgba(0, 0, 0, 0.54)"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon sx={{ color: "#caf0f8" }} />
-          </IconButton>
-          <Typography
-            sx={{ fontWeight: "bold", color: "#caf0f8", flex: 1 }}
-            variant="h6"
-            noWrap
-            component="div"
-          >
-            MediHelp v3.5
-          </Typography>
-        </div>
-
-        {loggedIn ? (
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>{userEmail}</MenuItem>
-              </Menu>
-            </div>            
-            <Button color="inherit" onClick={() => handleLogout()}>Logout</Button>            
+    <AppBar open={open} sx={{ backgroundColor: "#fff" }}>
+      <Toolbar>
+        <div style={{width:'100%', display:'flex', alignItems:'center'}}>
+          <div style={{float:'left'}}>
+            <IconButton
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{
+                marginRight: 5,
+                ...(open && { display: "none" }),
+              }}
+            >
+              <MenuIcon sx={{ color: "#caf0f8" }} />
+            </IconButton>
           </div>
-        ) : (
-          <Button color="inherit" onClick={() => setOpenLoginModal(true)}>Login</Button>                      
-        )}
+          <div style={{margin:'0 auto'}}>
+            <Typography
+              sx={{ fontWeight: "bold", color: "#0C0404" }}
+              variant="h6"
+              noWrap
+              component="div"
+            >
+              Empower Your Mental Well-Being
+            </Typography>
+          </div>
+          <div style={{float:'right'}}>
+            {loggedIn ? (
+              <div style={{display:'flex'}}>
+                <div>
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="0C0404"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <MenuItem onClick={handleClose}>{userEmail}</MenuItem>
+                  </Menu>
+                </div>
+                <Button sx={{color: '#0C0404'}} color="inherit" onClick={() => handleLogout()}>
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <Button sx={{color: '#0C0404'}} color="inherit" onClick={() => setOpenLoginModal(true)}>
+                Login
+              </Button>
+            )}
+          </div>
+        </div>
       </Toolbar>
     </AppBar>
   );

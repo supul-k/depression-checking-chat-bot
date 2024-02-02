@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import ChatBox from "../Components/ChatBox";
+import backgroundImage from "../Assets/Images/background.webp"
 
 function MediChatPage({ open, setOpenLoginModal }) {
-  const [viewportWidthInPx, setViewportWidthInPx] = useState(window.innerWidth);
 
   useEffect(() => {
     if (
@@ -16,17 +16,6 @@ function MediChatPage({ open, setOpenLoginModal }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setViewportWidthInPx(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
     <div>
       <Box
@@ -35,11 +24,12 @@ function MediChatPage({ open, setOpenLoginModal }) {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          // background: "linear-gradient(45deg, #03045e 30%, #0077b6 90%)",
-          height: "100%",
-          width: open
-            ? `calc(${viewportWidthInPx}px - 240px)`
-            : `calc(${viewportWidthInPx}px - 65px)`,
+          background: `url(${backgroundImage}) no-repeat center center fixed`,
+          backgroundSize: "cover",
+          height: "100vw",
+          // width: open
+          //   ? `calc(${viewportWidthInPx}px - 240px)`
+          //   : `calc(${viewportWidthInPx}px - 65px)`,
         }}
       >
         <ChatBox open={open} />

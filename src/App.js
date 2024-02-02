@@ -8,7 +8,7 @@ import MainDrawer from "./Components/MainDrawer";
 import MediChatPage from "./pages/MediChatPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { Box } from "@mui/material";
+import Layout from "./Layout/Layout";
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -18,13 +18,13 @@ function App() {
     <div className="App">
       <Router>
         <div>
-          <Box sx={{ display: "flex", width: "100vw", height: "100vh" }}>
-            <MainDrawer
-              open={open}
-              setOpen={setOpen}
-              setOpenRegisterModal={setOpenRegisterModal}
-              setOpenLoginModal={setOpenLoginModal}
-            />
+          <MainDrawer
+            open={open}
+            setOpen={setOpen}
+            setOpenRegisterModal={setOpenRegisterModal}
+            setOpenLoginModal={setOpenLoginModal}
+          />
+          <Layout>
             <Routes>
               <Route path="/" element={<HomePage open={open} />} />
               <Route
@@ -47,8 +47,7 @@ function App() {
               />
               <Route path="/activitychat" element={<ActivityChatPage />} />
             </Routes>
-          </Box>
-          {/* < Footer /> */}
+          </Layout>
         </div>
         {openLoginModal && (
           <LoginPage

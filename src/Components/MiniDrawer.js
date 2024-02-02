@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
@@ -17,13 +17,14 @@ import HomeIcon from "@mui/icons-material/Home";
 // import useMediaQuery from '@mui/material/useMediaQuery';
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import AssessmentIcon from "@mui/icons-material/Assessment";
+import logo from "../Assets/Images/logo-no-background.png";
 
 const drawerWidth = 240;
 const drawerIcons = ["Home", "MediHelp", "Activities"];
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
-  backgroundColor: "#0077b6",
+  backgroundColor: "#fff",
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -37,7 +38,7 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
-  backgroundColor: "#0077b6",
+  backgroundColor: "#fff",
   // width: `calc(${theme.spacing(7)} + 1px)`,
   width: "65px",
 });
@@ -83,10 +84,6 @@ export default function MiniDrawer({ open, setOpen, setOpenRegisterModal }) {
     }
   }, []);
 
-  // React.useEffect(() => {
-  //   setOpen(!isMobile);
-  // }, [isMobile]);
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -96,7 +93,7 @@ export default function MiniDrawer({ open, setOpen, setOpenRegisterModal }) {
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose} sx={{ color: "#caf0f8" }}>
+          <IconButton onClick={handleDrawerClose} sx={{ color: "#0C0404" }}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
@@ -104,6 +101,16 @@ export default function MiniDrawer({ open, setOpen, setOpenRegisterModal }) {
             )}
           </IconButton>
         </DrawerHeader>
+        <ListItemIcon
+          sx={{
+            minWidth: 0,
+            mr: open ? 3 : "auto",
+            justifyContent: "center",
+            display : !open ? "none" : "flex"
+          }}         
+        >
+          <img style={{width: '100px', marginBottom: '20px'}} src={logo} />
+        </ListItemIcon>
         <Divider />
         <List>
           {drawerIcons.map((text, index) => (
@@ -113,7 +120,7 @@ export default function MiniDrawer({ open, setOpen, setOpenRegisterModal }) {
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
-                  color: "#caf0f8",
+                  color: "#0C0404",
                 }}
                 onClick={() => {
                   if (index === 0) {
@@ -141,11 +148,11 @@ export default function MiniDrawer({ open, setOpen, setOpenRegisterModal }) {
                   }}
                 >
                   {index === 0 ? (
-                    <HomeIcon sx={{ color: "#caf0f8" }} />
+                    <HomeIcon sx={{ color: "#0C0404" }} />
                   ) : index === 1 ? (
-                    <ChatBubbleIcon sx={{ color: "#caf0f8" }} />
+                    <ChatBubbleIcon sx={{ color: "#0C0404" }} />
                   ) : (
-                    <AssessmentIcon sx={{ color: "#caf0f8" }} />
+                    <AssessmentIcon sx={{ color: "#0C0404" }} />
                   )}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
