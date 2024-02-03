@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import ChatBox from "../Components/ChatBox";
-import backgroundImage from "../Assets/Images/background.webp"
 
 function MediChatPage({ open, setOpenLoginModal }) {
 
@@ -24,12 +23,7 @@ function MediChatPage({ open, setOpenLoginModal }) {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: `url(${backgroundImage}) no-repeat center center fixed`,
-          backgroundSize: "cover",
-          height: "100vw",
-          // width: open
-          //   ? `calc(${viewportWidthInPx}px - 240px)`
-          //   : `calc(${viewportWidthInPx}px - 65px)`,
+          height: "100vh",          
         }}
       >
         <ChatBox open={open} />

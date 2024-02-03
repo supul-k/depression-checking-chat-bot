@@ -1,24 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
 
 function LandingPage() {
   const navigate = useNavigate();
   return (
     <Box
-      // component="main"
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -26,7 +15,6 @@ function LandingPage() {
         justifyContent: "center",
         height: "100%",
         width: "100%",
-        marginLeft: "240px",
       }}
     >
       <Typography

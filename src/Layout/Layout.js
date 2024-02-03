@@ -1,4 +1,5 @@
 import { styled } from "@mui/material/styles";
+import backgroundImage from "../Assets/Images/background.webp"
 
 const drawerWidth = 240;
 
@@ -11,7 +12,7 @@ const Layout = (styled("main", { shouldForwardProp: (prop) => prop !== "open" })
         duration: theme.transitions.duration.leavingScreen,
       }),
       height: `-${drawerWidth}px`,
-      marginLeft: `-${drawerWidth}px`,
+      // marginLeft: `-${drawerWidth}px`,
       ...(open && {
         transition: theme.transitions.create("margin", {
           easing: theme.transitions.easing.easeOut,
@@ -19,6 +20,8 @@ const Layout = (styled("main", { shouldForwardProp: (prop) => prop !== "open" })
         }),
         marginLeft: 0,
       }),
+      background: `url(${backgroundImage}) no-repeat center center fixed`,
+      backgroundSize: "cover"
     })
   );
 

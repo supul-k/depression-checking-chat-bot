@@ -15,8 +15,6 @@ import relax from "../Assets/Images/relax.webp";
 import routines from "../Assets/Images/routines.webp";
 import yoga from "../Assets/Images/yoga.webp";
 
-const viewportWidthInPx = window.innerWidth;
-
 const cardData = [
   {
     index: 1,
@@ -47,8 +45,6 @@ const cardData = [
 
 const ActivityComponent = ({ open }) => {
   const navigate = useNavigate();
-  
-  // const [isbotResponding, setIsbotResponding] = useState(true);
 
   const handleActivityChat = (title) => {
     navigate("/activitychat");
@@ -82,12 +78,8 @@ const ActivityComponent = ({ open }) => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "space-between",
-          background: "linear-gradient(45deg, #03045e 30%, #0077b6 90%)",
           height: "100vh",
           paddingTop: "100px",
-          width: open
-            ? `calc(${viewportWidthInPx}px - 240px)`
-            : `calc(${viewportWidthInPx}px - 65px)`,
         }}
       >
         <Box
@@ -95,6 +87,7 @@ const ActivityComponent = ({ open }) => {
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "space-around",
+            maxWidth: "70%",
           }}
         >
           {cardData.map((data, index) => (

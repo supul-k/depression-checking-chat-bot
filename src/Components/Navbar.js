@@ -83,7 +83,7 @@ function Navbar({ open, setOpen, setOpenLoginModal }) {
                 ...(open && { display: "none" }),
               }}
             >
-              <MenuIcon sx={{ color: "#caf0f8" }} />
+              <MenuIcon sx={{ color: "#0C0404" }} />
             </IconButton>
           </div>
           <div style={{margin:'0 auto'}}>

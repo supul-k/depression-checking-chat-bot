@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import { ChatResponseApi, ChatEvaluateApi } from "../api/Axios";
 import {
   Box,
-  TextField,
   Button,
   Paper,
   Modal,
   Typography,
   CircularProgress,
+  IconButton,
+  InputBase,
+  Divider,
 } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 
 const ChatBox = ({ open }) => {
   const [inputMessage, setInputMessage] = useState("");
@@ -119,28 +122,25 @@ const ChatBox = ({ open }) => {
 
   return (
     <div>
-      {/* <Box
+      <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "space-between",
-          background: "linear-gradient(45deg, #03045e 30%, #0077b6 90%)",
-          height: "100vh",
-          // width: open
-          //   ? `calc(${viewportWidthInPx}px - 240px)`
-          //   : `calc(${viewportWidthInPx}px - 65px)`,
+          height: `calc(100vh - 50px)`,
+          width: "100vw",
         }}
-      > */}
+      >
         <Paper
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-start",
             justifyContent: "flex-end",
-            maxWidth: "100%",
-            minWidth: "100%",
-            minHeight: "70%",
+            maxWidth: "80%",
+            minWidth: "60%",
+            height: `calc(100vh - 10px)`,
             padding: "20px",
             borderRadius: "10px",
             marginBottom: "20px",
@@ -168,97 +168,112 @@ const ChatBox = ({ open }) => {
             </div>
           ))}
         </Paper>
-        <Box
+        {/* <Box
           sx={{
             display: "flex",
             alignItems: "baseline",
-            justifyContent: "center",
+            // justifyContent: "center",
+            maxWidth: '100%',
+          }}
+        > */}
+        <Paper
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
             maxWidth: "80%",
             minWidth: "60%",
+            backgroundColor: 'transparent'
           }}
         >
-          <TextField
-            sx={{ marginBottom: "20px" }}
-            color="primary"
-            label="Type a message"
-            variant="outlined"
-            value={inputMessage}
-            inputProps={{
-              style: {
-                color: "white",
-                borderColor: "white",
-              },
-              placeholder: "Enter your message",
+          <Paper
+            component="form"
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: '90%'
             }}
-            onChange={(e) => setInputMessage(e.target.value)}
-            style={{ flex: 1 }}
-            focused
-          />
-          <Button
-            variant="contained"
-            onClick={handleSendMessage}
-            style={{
-              marginLeft: "10px",
-              backgroundColor: isChatbotResponding ? "#5bc0de" : "#0088cc",
-              borderRadius: "20px",
-              color: "white",
-              fontWeight: "bold",
-              boxShadow: "none",
-            }}
-            disabled={isChatbotResponding}
           >
-            Send
-          </Button>
+            <InputBase
+              sx={{ ml: 1, flex: 1, maxWidth: "100%", width: "100%" }}
+              maxWidth
+              placeholder="Enter your message"
+              inputProps={{ "aria-label": "Enter your message" }}
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleSendMessage();
+                }
+              }}
+            />
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <IconButton
+              color="#0C0404"
+              sx={{
+                p: "10px",
+              }}
+              aria-label="directions"
+              onClick={handleSendMessage}
+              disabled={isChatbotResponding}
+            >
+              <SendIcon />
+            </IconButton>
+          </Paper>
           <Button
             variant="contained"
             onClick={handleEvaluate}
             style={{
-              backgroundColor:
-                userMessages.length === 0 || isChatbotResponding ? "#5bc0de" : "#0088cc",
-              borderRadius: "20px",
+              width: "10%",
+              backgroundColor: "#0C0404",
+              borderRadius: "5px",
               color: "white",
               fontWeight: "bold",
               boxShadow: "none",
-              marginLeft: "100px",
+              marginLeft: "10px",
+              p: "2px 4px",
             }}
             disabled={userMessages.length === 0 || isChatbotResponding}
           >
             Evaluate
           </Button>
-        </Box>
-      {/* </Box> */}
-      <Modal
-        open={openModal}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Box
+        </Paper>
+        <Modal
+          open={openModal}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
           sx={{
-            bgcolor: "#5bc0de", // Set your background color here
-            borderRadius: "10px", // Set your border radius here
-            padding: "20px", // Set your padding here
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          {evaluateResponseMessage !== "" ? (
-            <>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Calculated Depression Level
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                {evaluateResponseMessage}
-              </Typography>
-            </>
-          ) : (
-            <CircularProgress />
-          )}
-        </Box>
-      </Modal>
+          <Box
+            sx={{
+              bgcolor: "#5bc0de", // Set your background color here
+              borderRadius: "10px", // Set your border radius here
+              padding: "20px", // Set your padding here
+            }}
+          >
+            {evaluateResponseMessage !== "" ? (
+              <>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Calculated Depression Level
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  {evaluateResponseMessage}
+                </Typography>
+              </>
+            ) : (
+              <CircularProgress />
+            )}
+          </Box>
+        </Modal>
+      </Box>
     </div>
   );
 };

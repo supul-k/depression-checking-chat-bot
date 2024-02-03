@@ -24,7 +24,7 @@ function App() {
             setOpenRegisterModal={setOpenRegisterModal}
             setOpenLoginModal={setOpenLoginModal}
           />
-          <Layout>
+          <Layout open={open}>
             <Routes>
               <Route path="/" element={<HomePage open={open} />} />
               <Route
