@@ -16,37 +16,37 @@ import routines from "../Assets/Images/routines.webp";
 import yoga from "../Assets/Images/yoga.webp";
 
 const cardData = [
+  // {
+  //   index: 1,
+  //   title: "Yoga Practice",
+  //   description: "Unwind and reduce stress with guided meditation sessions.",
+  //   image: yoga,
+  // },
   {
     index: 1,
-    title: "Yoga Practice",
-    description: "Unwind and reduce stress with guided meditation sessions.",
-    image: yoga,
-  },
-  {
-    index: 2,
     title: "Physical activities",
     description: "Escape to the calming sounds of nature and find peace.",
     image: physical,
   },
   {
-    index: 3,
+    index: 2,
     title: "Maintain a routine",
     description:
       "Learn mindfulness techniques to alleviate stress and anxiety.",
     image: routines,
   },
   {
-    index: 4,
+    index: 3,
     title: "Relaxation techniques",
     description: "Boost your mood and self-esteem with daily affirmations.",
     image: relax,
   },
 ];
 
-const ActivityComponent = ({ open }) => {
+const ActivityComponent = () => {
   const navigate = useNavigate();
 
-  const handleActivityChat = (title) => {
+  const handleActivityChat = () => {
     navigate("/activitychat");
     // setIsbotResponding(false);
     // const topic = {
@@ -80,6 +80,7 @@ const ActivityComponent = ({ open }) => {
           justifyContent: "space-between",
           height: "100vh",
           paddingTop: "100px",
+          // marginLeft: "200px",
         }}
       >
         <Box

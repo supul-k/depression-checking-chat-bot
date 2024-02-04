@@ -14,13 +14,14 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
-// import useMediaQuery from '@mui/material/useMediaQuery';
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-import AssessmentIcon from "@mui/icons-material/Assessment";
+import SpaIcon from '@mui/icons-material/Spa';
+import PeopleIcon from '@mui/icons-material/People';
+import ArticleIcon from '@mui/icons-material/Article';
 import logo from "../Assets/Images/logo-no-background.png";
 
 const drawerWidth = 240;
-const drawerIcons = ["Home", "MediHelp", "Activities"];
+const drawerIcons = ["Home", "Depression Prediction", "Mental Health Activities", "My Community", "My Diary"];
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -143,7 +144,7 @@ export default function MiniDrawer({ open, setOpen, setOpenRegisterModal }) {
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : "auto",
+                    mr: open ? 1 : "auto",
                     justifyContent: "center",
                   }}
                 >
@@ -151,11 +152,15 @@ export default function MiniDrawer({ open, setOpen, setOpenRegisterModal }) {
                     <HomeIcon sx={{ color: "#0C0404" }} />
                   ) : index === 1 ? (
                     <ChatBubbleIcon sx={{ color: "#0C0404" }} />
+                  ) : index === 2 ?  (
+                    <SpaIcon sx={{ color: "#0C0404" }} />
+                  ) : index === 3 ? (
+                    <PeopleIcon sx={{ color: "#0C0404" }} />
                   ) : (
-                    <AssessmentIcon sx={{ color: "#0C0404" }} />
+                    <ArticleIcon sx={{ color: "#0C0404" }} />
                   )}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0}} />
               </ListItemButton>
             </ListItem>
           ))}
