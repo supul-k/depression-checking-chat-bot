@@ -9,6 +9,7 @@ import MediChatPage from "./pages/MediChatPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Layout from "./Layout/Layout";
+import SubActivityPage from "./pages/SubActivityPage"
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -27,6 +28,7 @@ function App() {
           <Layout open={open}>
             <Routes>
               <Route path="/" element={<HomePage open={open} />} />
+              <Route path="/subactivity/:index" element={<SubActivityPage/>} />
               <Route
                 path="/medihelp"
                 element={

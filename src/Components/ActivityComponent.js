@@ -8,35 +8,27 @@ import {
   Typography,
   CardMedia,
 } from "@mui/material";
-// import { ChatActivityApi } from "../api/Axios";
 import { useNavigate } from "react-router-dom";
 import physical from "../Assets/Images/physical.webp";
 import relax from "../Assets/Images/relax.webp";
 import routines from "../Assets/Images/routines.webp";
-import yoga from "../Assets/Images/yoga.webp";
 
 const cardData = [
-  // {
-  //   index: 1,
-  //   title: "Yoga Practice",
-  //   description: "Unwind and reduce stress with guided meditation sessions.",
-  //   image: yoga,
-  // },
   {
-    index: 1,
+    index: 0,
     title: "Physical activities",
     description: "Escape to the calming sounds of nature and find peace.",
     image: physical,
   },
   {
-    index: 2,
+    index: 1,
     title: "Maintain a routine",
     description:
       "Learn mindfulness techniques to alleviate stress and anxiety.",
     image: routines,
   },
   {
-    index: 3,
+    index: 2,
     title: "Relaxation techniques",
     description: "Boost your mood and self-esteem with daily affirmations.",
     image: relax,
@@ -46,28 +38,8 @@ const cardData = [
 const ActivityComponent = () => {
   const navigate = useNavigate();
 
-  const handleActivityChat = () => {
-    navigate("/activitychat");
-    // setIsbotResponding(false);
-    // const topic = {
-    //   title: title,
-    // };
-    // console.log("title", topic);
-    // ChatActivityApi(topic)
-    //   .then((response) => {
-    //     console.log("response", response.data.message);
-    //     console.log("status", response.data.status);
-    //     if (response.data.status === true) {
-    //       setIsbotResponding(true);
-    //       navigate("/activitychat");
-    //     } else {
-    //       setIsbotResponding(true);
-    //       console.log("Response failed");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log("error", error.response.data.message);
-    //   });
+  const handleActivityChat = (index) => {
+    navigate(`/subactivity/${index}`);
   };
 
   return (
@@ -112,11 +84,11 @@ const ActivityComponent = () => {
               </CardContent>
               <CardActions>
                 <Button
-                  onClick={() => handleActivityChat(data.title)}
+                  onClick={() => handleActivityChat(data.index)}
                   size="small"
                   // disabled={!isbotResponding}
                 >
-                  Start guide
+                  Explore
                 </Button>
               </CardActions>
             </Card>
