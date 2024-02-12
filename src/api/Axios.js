@@ -13,7 +13,7 @@ export const api = axios.create({
 
 export const registerAPI = axios.create({
   baseURL: "http://localhost:8080/",
-  timeout: 30000,
+  timeout: 120000,
   headers: {
     "Content-type": "application/json",
   },

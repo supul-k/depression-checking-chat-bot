@@ -11,6 +11,7 @@ function HomePage() {
           display: "flex",
           height: "100vh",
           width: "100%",
+          justifyContent: "space-around"
         }}
       >
         <LandingPage />

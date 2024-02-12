@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ChatActivityMessageApi } from "../api/Axios";
-import {
-  Box,
-  TextField,
-  Button,
-  Paper
-} from "@mui/material";
+import { Box, Paper, InputBase, Divider, IconButton } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 
 const ActivityChat = ({ open }) => {
   const [inputMessage, setInputMessage] = useState("");
@@ -60,7 +56,7 @@ const ActivityChat = ({ open }) => {
 
   const userMessages = chatMessages
     .filter((message) => message.user === true)
-    .map((message) => message.text);  
+    .map((message) => message.text);
 
   const chatBotMessage = () => {
     setTimeout(() => {
@@ -84,92 +80,104 @@ const ActivityChat = ({ open }) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "space-between",
-          background: "linear-gradient(45deg, #03045e 30%, #0077b6 90%)",
+          justifyContent: "center",
           height: "100vh",
-          width: open
-            ? `calc(${viewportWidthInPx}px - 240px)`
-            : `calc(${viewportWidthInPx}px - 65px)`,
         }}
       >
-        <Paper
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            justifyContent: "flex-end",
-            maxWidth: "80%",
-            minWidth: "60%",
-            minHeight: "70%",
-            padding: "20px",
-            borderRadius: "10px",
-            marginBottom: "20px",
-            overflowY: "auto",
-            maxHeight: "calc(100vh - 120px)",
-            marginTop: "100px",
-          }}
-        >
-          {chatMessages.map((message, index) => (
-            <div
-              key={index}
-              style={{
-                textAlign: message.user ? "right" : "left",
-                margin: message.user
-                  ? "8px 8px 8px 200px"
-                  : "8px 200px 8px 8px",
-                padding: "10px",
-                maxWidth: "80%",
-                borderRadius: "8px",
-                background: message.user ? "#5bc0de" : "#e0e0e0",
-                color: message.user ? "white" : "black",
-                alignSelf: message.user ? "flex-end" : "flex-start",
-              }}
-            >
-              {message.text}
-            </div>
-          ))}
-        </Paper>
         <Box
           sx={{
             display: "flex",
-            alignItems: "baseline",
-            justifyContent: "center",
-            maxWidth: "80%",
-            minWidth: "60%",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: `calc(100vh - 50px)`,
+            width: "100vw",
           }}
         >
-          <TextField
-            sx={{ marginBottom: "20px" }}
-            color="primary"
-            label="Type a message"
-            variant="outlined"
-            value={inputMessage}
-            inputProps={{
-              style: {
-                color: "white",
-                borderColor: "white",
-              },
-              placeholder: "Enter your message",
+          <Paper
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              justifyContent: "flex-end",
+              maxWidth: "80%",
+              minWidth: "60%",
+              height: `calc(100vh - 10px)`,
+              padding: "20px",
+              borderRadius: "10px",
+              marginBottom: "20px",
+              overflowY: "auto",
+              marginTop: "100px",
             }}
-            onChange={(e) => setInputMessage(e.target.value)}
-            style={{ flex: 1 }}
-            focused
-          />
-          <Button
-            variant="contained"
-            onClick={handleSendMessage}
-            style={{
-              marginLeft: "10px",
-              backgroundColor: isChatbotResponding ? "#5bc0de" : "#0088cc",
-              borderRadius: "20px",
-              color: "white",
-              fontWeight: "bold",
-              boxShadow: "none",
-            }}
-            disabled={isChatbotResponding}
           >
-            Send
-          </Button>
+            {chatMessages.map((message, index) => (
+              <div
+                key={index}
+                style={{
+                  textAlign: message.user ? "right" : "left",
+                  margin: message.user
+                    ? "8px 8px 8px 200px"
+                    : "8px 200px 8px 8px",
+                  padding: "10px",
+                  maxWidth: "80%",
+                  borderRadius: "8px",
+                  background: message.user ? "#5bc0de" : "#e0e0e0",
+                  color: message.user ? "white" : "black",
+                  alignSelf: message.user ? "flex-end" : "flex-start",
+                }}
+              >
+                {message.text}
+              </div>
+            ))}
+          </Paper>
+          <Paper
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              maxWidth: "80%",
+              minWidth: "60%",
+              backgroundColor: "transparent",
+            }}
+          >
+            <Paper
+              component="form"
+              sx={{
+                p: "2px 4px",
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <InputBase
+                sx={{ ml: 1, flex: 1, maxWidth: "100%", width: "100%" }}
+                maxWidth
+                placeholder="Enter your message"
+                inputProps={{ "aria-label": "Enter your message" }}
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }
+                }}
+              />
+              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+              <IconButton
+                color="#0C0404"
+                sx={{
+                  p: "10px",
+                }}
+                aria-label="directions"
+                onClick={handleSendMessage}
+                disabled={isChatbotResponding}
+              >
+                <SendIcon />
+              </IconButton>
+            </Paper>
+          </Paper>
         </Box>
       </Box>
     </div>

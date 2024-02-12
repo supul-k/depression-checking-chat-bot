@@ -77,7 +77,7 @@ const ActivityComponent = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "space-around",
           height: "100vh",
           paddingTop: "100px",
           // marginLeft: "200px",
@@ -88,7 +88,7 @@ const ActivityComponent = () => {
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "space-around",
-            maxWidth: "70%",
+            maxWidth: "100%",
           }}
         >
           {cardData.map((data, index) => (
@@ -99,7 +99,7 @@ const ActivityComponent = () => {
               <CardMedia
                 component="img"
                 alt="green iguana"
-                height="80"
+                height="200"
                 image={data.image}
               />
               <CardContent>

@@ -9,6 +9,7 @@ function ActivityPage({ open, setOpenLoginModal }) {
       <Box
         sx={{
           display: "flex",
+          justifyContent:"space-around",
           height: "100%",
         }}
       >

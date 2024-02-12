@@ -38,8 +38,8 @@ const ChatBox = ({ open }) => {
       ChatResponseApi(sentData)
         .then((response) => {
           setInputMessage("");
-          console.log("response", response.data.message);
-          console.log("status", response.data.status);
+          // console.log("response", response.data.message);
+          // console.log("status", response.data.status);
           if (response.data.status === true) {
             if (response.data.message === "") {
               setBotResponseMessage("I couldn't understand that");
