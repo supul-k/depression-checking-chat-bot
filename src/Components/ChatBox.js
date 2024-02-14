@@ -128,8 +128,9 @@ const ChatBox = ({ open }) => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "space-between",
-          height: `calc(100vh - 50px)`,
-          width: "100vw",
+          height: `calc(100vh - 64px)`,
+          width: `calc(100vw - 240px)`,
+          marginTop: "64px",
         }}
       >
         <Paper
@@ -145,7 +146,7 @@ const ChatBox = ({ open }) => {
             borderRadius: "10px",
             marginBottom: "20px",
             overflowY: "auto",
-            marginTop: "100px",
+            margin: "1%"
           }}
         >
           {chatMessages.map((message, index) => (
@@ -168,14 +169,6 @@ const ChatBox = ({ open }) => {
             </div>
           ))}
         </Paper>
-        {/* <Box
-          sx={{
-            display: "flex",
-            alignItems: "baseline",
-            // justifyContent: "center",
-            maxWidth: '100%',
-          }}
-        > */}
         <Paper
           sx={{
             display: "flex",
@@ -184,7 +177,8 @@ const ChatBox = ({ open }) => {
             justifyContent: "space-between",
             maxWidth: "80%",
             minWidth: "60%",
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
+            margin: "1%",
           }}
         >
           <Paper
@@ -202,8 +196,11 @@ const ChatBox = ({ open }) => {
               placeholder="Enter your message"
               inputProps={{ "aria-label": "Enter your message" }}
               value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
+              onChange={(e) => setInputMessage(e.target.value)}              
               onKeyDown={(e) => {
+                if (isChatbotResponding) {
+                  return;
+                }
                 if (e.key === "Enter") {
                   e.preventDefault();
                   handleSendMessage();
