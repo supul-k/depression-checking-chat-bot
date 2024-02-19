@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { jwtDecode } from 'jwt-decode';
 import { ChatResponseApi, ChatEvaluateApi } from "../api/Axios";
 import {
   Box,
@@ -20,9 +21,30 @@ const ChatBox = ({ open }) => {
   const [isChatbotResponding, setIsChatbotResponding] = useState(false);
   const [evaluateResponseMessage, setEvaluateResponseMessage] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [userName, setUserName] = useState("");
 
   const handleOpen = () => setOpenModal(true);
   const handleClose = () => setOpenModal(false);
+
+  useEffect(() => {
+    // Get the token from localStorage
+    const token = localStorage.getItem("token");
+
+    const decodeToken = (token) => {
+      if (token) {
+        try {
+          const decoded = jwtDecode(token);
+          console.log("decoded", decoded);
+          setUserName(decoded.username);
+        } catch (error) {
+          console.error("Error decoding JWT token:", error);
+        }
+      } else {
+        console.error("Token not found in localStorage.");
+      }
+    };
+    decodeToken(token);
+  }, []);
 
   const handleSendMessage = () => {
     if (inputMessage.trim() !== "") {
@@ -38,20 +60,17 @@ const ChatBox = ({ open }) => {
       ChatResponseApi(sentData)
         .then((response) => {
           setInputMessage("");
-          // console.log("response", response.data.message);
-          // console.log("status", response.data.status);
           if (response.data.status === true) {
             if (response.data.message === "") {
               setBotResponseMessage("I couldn't understand that");
             } else {
-              setBotResponseMessage(response.data.message);
+              let message = response.data.message.replace(/User/g, userName);
+              setBotResponseMessage(message);
             }
-            // chatBotMessage();
             setIsChatbotResponding(false);
           } else {
             setBotResponseMessage("Response failed");
             setIsChatbotResponding(false);
-            // chatBotMessage();
           }
         })
         .catch((error) => {
@@ -146,7 +165,7 @@ const ChatBox = ({ open }) => {
             borderRadius: "10px",
             marginBottom: "20px",
             overflowY: "auto",
-            margin: "1%"
+            margin: "1%",
           }}
         >
           {chatMessages.map((message, index) => (
@@ -177,7 +196,7 @@ const ChatBox = ({ open }) => {
             justifyContent: "space-between",
             maxWidth: "80%",
             minWidth: "60%",
-            backgroundColor: 'transparent',
+            backgroundColor: "transparent",
             margin: "1%",
           }}
         >
@@ -187,16 +206,15 @@ const ChatBox = ({ open }) => {
               p: "2px 4px",
               display: "flex",
               alignItems: "center",
-              width: '90%'
+              width: "90%",
             }}
           >
             <InputBase
               sx={{ ml: 1, flex: 1, maxWidth: "100%", width: "100%" }}
-              maxWidth
               placeholder="Enter your message"
               inputProps={{ "aria-label": "Enter your message" }}
               value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}              
+              onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={(e) => {
                 if (isChatbotResponding) {
                   return;

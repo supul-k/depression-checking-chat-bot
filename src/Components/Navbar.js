@@ -9,6 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import { jwtDecode } from "jwt-decode";
 
 const drawerWidth = 240;
 
@@ -34,6 +35,7 @@ function Navbar({ open, setOpen, setOpenLoginModal }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [userName, setUserName] = useState("");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -48,18 +50,27 @@ function Navbar({ open, setOpen, setOpenLoginModal }) {
   };
 
   useEffect(() => {
-    // Retrieve the token from localStorage
+    // Get the token from localStorage
     const token = localStorage.getItem("token");
 
-    if (token) {
-      // If the token exists, fetch the email and update state
-      const email = localStorage.getItem("email");
-      setUserEmail(email);
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-      console.log("User is not logged in.");
-    }
+    const decodeToken = (token) => {
+      if (token) {
+        try {
+          const decoded = jwtDecode(token);
+          console.log("decoded", decoded);
+          setUserName(decoded.username);
+          setUserEmail(decoded.email);
+          setLoggedIn(true);
+        } catch (error) {
+          setLoggedIn(false);
+          console.error("Error decoding JWT token:", error);
+        }
+      } else {
+        setLoggedIn(false);
+        console.error("Token not found in localStorage.");
+      }
+    };
+    decodeToken(token);
   }, []);
 
   const handleLogout = () => {
@@ -72,8 +83,8 @@ function Navbar({ open, setOpen, setOpenLoginModal }) {
   return (
     <AppBar open={open} sx={{ backgroundColor: "#fff" }}>
       <Toolbar>
-        <div style={{width:'100%', display:'flex', alignItems:'center'}}>
-          <div style={{float:'left'}}>
+        <div style={{ width: "100%", display: "flex", alignItems: "center" }}>
+          <div style={{ float: "left" }}>
             <IconButton
               aria-label="open drawer"
               onClick={handleDrawerOpen}
@@ -86,7 +97,7 @@ function Navbar({ open, setOpen, setOpenLoginModal }) {
               <MenuIcon sx={{ color: "#0C0404" }} />
             </IconButton>
           </div>
-          <div style={{margin:'0 auto'}}>
+          <div style={{ margin: "0 auto" }}>
             <Typography
               sx={{ fontWeight: "bold", color: "#0C0404" }}
               variant="h6"
@@ -96,9 +107,9 @@ function Navbar({ open, setOpen, setOpenLoginModal }) {
               Empower Your Mental Well-Being
             </Typography>
           </div>
-          <div style={{float:'right'}}>
+          <div style={{ float: "right" }}>
             {loggedIn ? (
-              <div style={{display:'flex'}}>
+              <div style={{ display: "flex" }}>
                 <div>
                   <IconButton
                     size="large"
@@ -128,12 +139,20 @@ function Navbar({ open, setOpen, setOpenLoginModal }) {
                     <MenuItem onClick={handleClose}>{userEmail}</MenuItem>
                   </Menu>
                 </div>
-                <Button sx={{color: '#0C0404'}} color="inherit" onClick={() => handleLogout()}>
+                <Button
+                  sx={{ color: "#0C0404" }}
+                  color="inherit"
+                  onClick={() => handleLogout()}
+                >
                   Logout
                 </Button>
               </div>
             ) : (
-              <Button sx={{color: '#0C0404'}} color="inherit" onClick={() => setOpenLoginModal(true)}>
+              <Button
+                sx={{ color: "#0C0404" }}
+                color="inherit"
+                onClick={() => setOpenLoginModal(true)}
+              >
                 Login
               </Button>
             )}

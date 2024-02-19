@@ -30,8 +30,6 @@ export default function Login({ openLoginModal, setOpenLoginModal, setOpenRegist
         if (response.data.status === true) {
           alert("login success");
           localStorage.setItem("token", response.data.token);
-          localStorage.setItem("email", response.data.email);
-          localStorage.setItem("user_id", response.data.user_id);
           window.location.reload();
           navigate("/");
           setOpenLoginModal(false);       
@@ -41,7 +39,7 @@ export default function Login({ openLoginModal, setOpenLoginModal, setOpenRegist
         }
       })
       .catch((error) => {
-        console.log("error", error.response.data.message);
+        alert("Incorrect email or password");
       });
   };
 
@@ -62,7 +60,6 @@ export default function Login({ openLoginModal, setOpenLoginModal, setOpenRegist
         }}
         keepMounted
         open={openLoginModal}
-        // onClose={handleClose}
         aria-labelledby="server-modal-title"
         aria-describedby="server-modal-description"
       >
