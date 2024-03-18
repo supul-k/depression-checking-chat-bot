@@ -84,101 +84,109 @@ const ActivityChat = ({ open }) => {
           height: "100vh",
         }}
       >
-        <Box
+        <Paper
           sx={{
             display: "flex",
             flexDirection: "column",
+            alignItems: "flex-start",
+            // justifyContent: "flex-end",
+            maxWidth: "61%",
+            minWidth: "60%",
+            height: `calc(100vh - 10px)`,
+            padding: "20px",
+            borderRadius: "10px",
+            marginBottom: "20px",
+            overflowY: "auto",
+            marginTop: "100px",
+          }}
+        >
+          {chatMessages.map((message, index) => (
+            <div
+              key={index}
+              style={{
+                textAlign: message.user ? "right" : "left",
+                margin: message.user
+                  ? "8px 8px 8px 200px"
+                  : "8px 200px 8px 8px",
+                padding: "10px",
+                maxWidth: "80%",
+                borderRadius: "8px",
+                background: message.user ? "#5bc0de" : "#e0e0e0",
+                color: message.user ? "white" : "black",
+                alignSelf: message.user ? "flex-end" : "flex-start",
+              }}
+            >
+              {message.text ? (
+                <div style={{textAlign: 'left'}}>
+                  {message.text.split(/(?=\d+\.\s)/).map((item, index) => {
+                    if (index === 0 && !item.trim().match(/^\d+\.\s/)) {
+                      // If the first item is not starting with a number, it's treated as an introduction
+                      return <div key={index}>{item}</div>;
+                    } else {
+                      // Render list items without adding extra numbers
+                      return (
+                        <div key={index}>
+                          <div>{item}</div>
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
+              ) : (
+                "Enter a message to relate with the chatbot."
+              )}
+            </div>
+          ))}
+        </Paper>
+        <Paper
+          sx={{
+            display: "flex",
+            flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
-            height: `calc(100vh - 50px)`,
-            width: "100vw",
+            maxWidth: "61%",
+            minWidth: "60%",
+            backgroundColor: "transparent",
+            marginBottom: "10px",
           }}
         >
           <Paper
+            component="form"
             sx={{
+              p: "2px 4px",
               display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              justifyContent: "flex-end",
-              maxWidth: "80%",
-              minWidth: "60%",
-              height: `calc(100vh - 10px)`,
-              padding: "20px",
-              borderRadius: "10px",
-              marginBottom: "20px",
-              overflowY: "auto",
-              marginTop: "100px",
-            }}
-          >
-            {chatMessages.map((message, index) => (
-              <div
-                key={index}
-                style={{
-                  textAlign: message.user ? "right" : "left",
-                  margin: message.user
-                    ? "8px 8px 8px 200px"
-                    : "8px 200px 8px 8px",
-                  padding: "10px",
-                  maxWidth: "80%",
-                  borderRadius: "8px",
-                  background: message.user ? "#5bc0de" : "#e0e0e0",
-                  color: message.user ? "white" : "black",
-                  alignSelf: message.user ? "flex-end" : "flex-start",
-                }}
-              >
-                {message.text}
-              </div>
-            ))}
-          </Paper>
-          <Paper
-            sx={{
-              display: "flex",
-              flexDirection: "row",
               alignItems: "center",
-              justifyContent: "space-between",
-              maxWidth: "80%",
-              minWidth: "60%",
-              backgroundColor: "transparent",
+              width: "100%",
             }}
           >
-            <Paper
-              component="form"
-              sx={{
-                p: "2px 4px",
-                display: "flex",
-                alignItems: "center",
-                width: "100%",
+            <InputBase
+              sx={{ ml: 1, flex: 1, maxWidth: "100%", width: "100%" }}
+              maxWidth
+              placeholder="Enter your message"
+              inputProps={{ "aria-label": "Enter your message" }}
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleSendMessage();
+                }
               }}
+            />
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <IconButton
+              color="#0C0404"
+              sx={{
+                p: "10px",
+              }}
+              aria-label="directions"
+              onClick={handleSendMessage}
+              disabled={isChatbotResponding}
             >
-              <InputBase
-                sx={{ ml: 1, flex: 1, maxWidth: "100%", width: "100%" }}
-                maxWidth
-                placeholder="Enter your message"
-                inputProps={{ "aria-label": "Enter your message" }}
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    handleSendMessage();
-                  }
-                }}
-              />
-              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-              <IconButton
-                color="#0C0404"
-                sx={{
-                  p: "10px",
-                }}
-                aria-label="directions"
-                onClick={handleSendMessage}
-                disabled={isChatbotResponding}
-              >
-                <SendIcon />
-              </IconButton>
-            </Paper>
+              <SendIcon />
+            </IconButton>
           </Paper>
-        </Box>
+        </Paper>
       </Box>
     </div>
   );
